@@ -1,0 +1,151 @@
+//imports don't work in codepen
+const {Component} = ng.core;
+const {bootstrap} = ng.platform.browser;
+
+@Component({
+    selector: 'app-root',
+    template: `
+ <header> 
+<h4>Pomodoro timer (angular2)</h4>
+</header>
+  <svg class="circle">
+    <circle r="50" cx="200" cy="200" [style.strokeDashoffset]="dashoffestUpdate"></circle>
+  </svg>
+  
+          <h2 class="timer" *ngIf="!isBreak">
+{{mins}} : {{secs < 10 ? "0" + secs  : secs}}
+</h2>
+
+<div *ngIf="isBreak">
+<h2>time for break!</h2>
+{{breakMins}} : {{breakSecs < 10 ? "0" + breakSecs  : breakSecs}}</div>
+ <button id="go" *ngIf="!isRunning" (click)="run()"><i class="fas fa-play"></i>
+</button>
+
+<button id="pause" *ngIf="isRunning" (click)="pause()"><i class="fas fa-pause"></i>
+</button>
+
+<button id="reset" *ngIf="isRunning" (click)="reset()"><i class="fas fa-undo-alt"></i>
+
+</button>
+<div class="options">
+<p>
+change length of session time: 
+<button class="change" (click)="decrease()">-</button>
+  {{mins}} 
+<button class="change" (click)="increase()">+</button> 
+</p>
+<p>
+change length of break time: 
+<button class="change" (click)="decreaseBreak()">-</button>
+ {{breakMins}}   <button class="change" (click)="increaseBreak()">+</button>
+
+</p>
+</div>
+`
+})
+
+class AppComponent {
+    initialMins = 25;
+    mins = 25;
+    secs = 0;
+    isRunning = false;
+    isZero = true;
+    isBreak = false;
+    initialBreak = 5;
+    breakMins = 5;
+    breakSecs = 0
+    // dashoffset = 0;
+    // radius = 50;
+    // dashoffestUpdate = 2 * Math.PI * 100;
+    // heightVal = 100;
+    // heightPX = heightVal +'px';
+  
+  run(){
+    this.isRunning = true;
+    this.counter();
+    this.isBreak = false;
+    
+  }
+  
+  reset(){
+    this.mins = 25;
+    this.secs = 0; 
+    this.isRunning = false;
+  }
+  
+  pause(){
+    this.isRunning = false;
+  }
+  increase(){
+    if(!this.isRunning)
+      this.mins+=1;
+  }
+  decrease(){
+    if(!this.isRunning && this.mins > 0)
+      this.mins-=1;
+  }
+  increaseBreak(){
+    if(!this.isRunning)
+      this.breakMins+=1;
+  }
+  decreaseBreak(){
+    if(!this.isRunning && this.breakMins > 0)
+      this.breakMins-=1;
+  }
+  breakTime(){
+    this.counterBreak();
+   console.log("time for break");
+  }
+  
+  counter() {
+    setTimeout(() => {
+      if ((this.mins || this.secs) && this.isRunning) {
+        if (this.secs === 0) {
+          this.secs = 59;
+          this.mins -= 1;
+          
+        } else {
+          this.secs -= 1;
+          // this.dashoffestUpdate--;
+          
+        }
+        this.counter();
+      };
+      if(this.mins == 0 && this.secs == 0) {
+        this.breakTime();
+        this.isRunning = false;
+        this.isBreak = true;
+        this.reset();
+      };
+     
+    }, 1000);
+  }
+  counterBreak() {
+    setTimeout(() => {
+      if ((this.breakMins || this.breakSecs) && this.isBreak) {
+        if (this.breakSecs === 0) {
+          this.breakSecs = 59;
+          this.breakMins -= 1;
+          
+        } else {
+          this.breakSecs -= 1;
+          // this.dashoffestUpdate--;
+          
+        }
+        this.counterBreak();
+      };
+      if(this.breakMins == 0 && this.breakSecs == 0) {
+        this.counter();
+        this.isRunning = true;
+        this.isBreak = false;
+        this.reset();
+      };
+     
+    }, 1000);
+  }
+  
+  
+}
+
+bootstrap(AppComponent);

@@ -1,0 +1,73 @@
+body
+  background: #fff
+  // color: #fff
+  display: flex
+  justify-content: center
+  align-items: center
+  min-height: 100vh
+  font-family: 'Inconsolata', monospace
+app-root
+  background: #f85032
+  background: -webkit-linear-gradient(to bottom, #f85032, #e73827)
+  background: linear-gradient(to bottom, #f85032, #e73827)
+  min-width: 300px
+  @media screen and (max-width: 349px)
+    min-width: 100%
+  margin: 0 auto
+  height: auto
+  display: block
+  text-align: center
+  color: #fff
+  border-radius: 10px
+  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.2)
+
+header
+  background-color: rgba(255,255,255,.1)
+  height: 100%
+  padding: 20px
+  margin-bottom: 50px
+  
+h4
+  margin: 0
+  font-size: 1em
+.timer
+  margin: 1em
+  font-size: 3em
+button
+  height: 3em
+  width: 3em
+  border-radius: 50%
+  border: 0
+  box-shadow: 1px 2px 2px rgba(0,0,0, .2)
+.change
+  height: 1.8em
+  width: 1.8em
+  
+svg.circle
+  position: relative
+  top: 0
+  right: 0
+  left: 0
+  width: 400px
+  height: 400px
+  transform: rotateY(-180deg) rotateZ(-90deg)
+  display: block
+  display: none
+
+svg circle
+  stroke-dasharray: 1300px
+  stroke-dashoffset: 0px
+  stroke-linecap: round
+  stroke-width: 5px
+  stroke: red
+  fill: none
+  
+  // animation: countdown 10s linear infinite forwards
+
+.options
+  padding: 5px 0 15px 0
+  margin-top: 3em
+  font-size: .8em
+  background-color: rgba(255,255,255,.1)
+  p:last-child
+    margin-bottom: 0
